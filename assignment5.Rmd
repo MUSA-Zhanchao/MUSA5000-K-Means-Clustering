@@ -12,4 +12,128 @@ output:
     code_download: yes
     mathjax: default
 ---
+```{r, message=FALSE, warning=FALSE, include=FALSE}
+
+options(scipen=999)
+options(digits = 3)
+
+
+library(tidyverse)
+library(sf)
+library(kableExtra)
+library(patchwork)
+library(flexclust)
+library(NbClust)
+```
+
+```{r, include=FALSE}
+data <- read.csv("data/RegressionData.csv")
+philly_shape <- st_read("data/Regression Data.shp")
+```
+
 # Introduction
+# Methods
+# Results
+```{r, message=FALSE, warning=FALSE}
+
+df <- data.frame(scale(data[-1]))
+wss <- (nrow(df)-1)*sum(apply(df,2,var))
+for (i in 2:20) wss[i] <- sum(kmeans(df, 
+                                     centers=i)$withinss)
+
+plot_data <- data.frame(
+  Clusters = 1:20,
+  WSS = wss
+)
+
+ggplot(plot_data, aes(x = Clusters, y = WSS)) +
+  geom_line(color = "#c44536", size = 1) +
+  geom_point(color = "#283d3b", size = 1.5) +
+  labs(
+    title = "Scree Plot for Identifying Optimal Clusters",
+    x = "Number of Clusters",
+    y = "Within-Group Sum of Squares"
+  ) +
+  theme_light() +   
+  theme(plot.subtitle = element_text(size = 9,face = "italic"),
+        plot.title = element_text(size = 12, face = "bold"), 
+        axis.text.x=element_text(size=6),
+        axis.text.y=element_text(size=6), 
+        axis.title=element_text(size=8))
+```
+
+```{r k-means nc, message=FALSE, warning=FALSE}
+set.seed(1234)
+nc <- NbClust(df, min.nc=2, max.nc=15, method="kmeans", index="all")
+```
+
+```{r, message=FALSE, warning=FALSE}
+best_n_table <- as.data.frame(table(nc$Best.n[1,]))
+colnames(best_n_table) <- c("Clusters", "CriteriaCount")
+ggplot(best_n_table, aes(x = Clusters, y = CriteriaCount)) +
+  geom_bar(stat = "identity", fill = "#283d3b", color = NA) +
+  labs(
+    x = "Number of Clusters",
+    y = "Number of Criteria",
+    title = "Number of Clusters Chosen by 26 Criteria"
+  ) +
+  theme_light() +   
+  theme(plot.subtitle = element_text(size = 9,face = "italic"),
+        plot.title = element_text(size = 12, face = "bold"), 
+        axis.text.x=element_text(size=6),
+        axis.text.y=element_text(size=6), 
+        axis.title=element_text(size=8))
+```
+
+```{r k-means, message=FALSE, warning=FALSE}
+set.seed(12)
+fit.km <- kmeans(df, 2, nstart = 25)
+
+cluster_sizes <- data.frame(
+  Cluster = 1:length(fit.km$size),
+  Size = fit.km$size
+)
+
+cluster_sizes %>%
+  kbl(
+    caption = "Cluster Sizes from K-Means Clustering",
+    col.names = c("Cluster", "Number of Points"),
+    align = "c"
+  ) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+```
+```{r summarize cluster table, message=FALSE, warning=FALSE}
+cluster_summary <- cbind(
+  round(aggregate(data[-1], by = list(Cluster = fit.km$cluster), mean), 1),
+  Size = fit.km$size
+)
+
+cluster_summary %>%
+  kbl(caption = "Summary of K-Means Clustering Results",
+      col.name=c('Cluster','MEDHVAL', "PCTBACHMOR", "MEDHHINC", "PCTVACANT", "PCTSINGLES", "Size")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+```
+```{r, message=FALSE, warning=FALSE}
+cluster_assignments <- data.frame(Observation = 1:nrow(df), ClusterID = fit.km$cluster)
+philly_shape_with_clusters <- philly_shape %>%
+  left_join(cluster_assignments, by = c("POLY_ID" = "Observation"))
+
+ggplot(philly_shape_with_clusters) +
+  geom_sf(aes(fill = as.factor(ClusterID)), color = NA) +  # Set color to NA to remove stroke
+  scale_fill_manual(values = c("#edddd4", "#c44536")) +
+  theme(
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    plot.title = element_text(size = 12, face = "bold"),
+    panel.background = element_blank(),
+    panel.border = element_rect(colour = "grey", fill = NA, size = 0.4)
+  ) +
+  labs(title = "K-Means Clustering of Philadelphia Census Blocks",
+       subtitle = "2 Clusters",
+       fill = "Cluster ID")
+
+```
+
+# Discussion
