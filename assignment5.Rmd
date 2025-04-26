@@ -2,7 +2,7 @@
 title: "MUSA5000: K-Means Clustering"
 author: "Zhanchao Yang, Haoyu Zhu, Kavana Raju"
 date: "`r Sys.Date()`"
-output: 
+output:
   html_document:
     theme: flatly
     highlight: tango
@@ -38,7 +38,7 @@ philly_shape <- st_read("data/Regression Data.shp")
 
 df <- data.frame(scale(data[-1]))
 wss <- (nrow(df)-1)*sum(apply(df,2,var))
-for (i in 2:20) wss[i] <- sum(kmeans(df, 
+for (i in 2:20) wss[i] <- sum(kmeans(df,
                                      centers=i)$withinss)
 
 plot_data <- data.frame(
@@ -54,11 +54,11 @@ ggplot(plot_data, aes(x = Clusters, y = WSS)) +
     x = "Number of Clusters",
     y = "Within-Group Sum of Squares"
   ) +
-  theme_light() +   
+  theme_light() +
   theme(plot.subtitle = element_text(size = 9,face = "italic"),
-        plot.title = element_text(size = 12, face = "bold"), 
+        plot.title = element_text(size = 12, face = "bold"),
         axis.text.x=element_text(size=6),
-        axis.text.y=element_text(size=6), 
+        axis.text.y=element_text(size=6),
         axis.title=element_text(size=8))
 ```
 
@@ -77,11 +77,11 @@ ggplot(best_n_table, aes(x = Clusters, y = CriteriaCount)) +
     y = "Number of Criteria",
     title = "Number of Clusters Chosen by 26 Criteria"
   ) +
-  theme_light() +   
+  theme_light() +
   theme(plot.subtitle = element_text(size = 9,face = "italic"),
-        plot.title = element_text(size = 12, face = "bold"), 
+        plot.title = element_text(size = 12, face = "bold"),
         axis.text.x=element_text(size=6),
-        axis.text.y=element_text(size=6), 
+        axis.text.y=element_text(size=6),
         axis.title=element_text(size=8))
 ```
 
