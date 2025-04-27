@@ -37,7 +37,7 @@ In this report, we use the K-means clustering algorithm to analyze five socio-ec
 
 K-means clustering offers several benefits: it reduces the complexity by segementing neighborhoods into clear typologies, highlights correlations between income, education, and housing types, and organizes the data into meaningful clusters. This analysis addresses key questions, such as identifying distinct neighborhood groups, understanding defining factors for each cluster, and exploring how income and education relate to vacancy rates of housing types.
 
-Additionally, this approach would help urban planners and policy makers to make target interventions for disadvantage clusters or neighborhoods, such as affordable housing or economic revitalization efforts. K-means clustering provides actionable insights for data-driven decision-making. 
+Additionally, this approach would help urban planners and policy makers to make target interventions for disadvantage clusters or neighborhoods, such as affordable housing or economic revitalization efforts. K-means clustering provides actionable insights for data-driven decision-making.
 
 # Methods
 
