@@ -87,8 +87,8 @@ plot_data <- data.frame(
 )
 
 ggplot(plot_data, aes(x = Clusters, y = WSS)) +
-  geom_line(color = "#c44536", size = 1) +
-  geom_point(color = "#283d3b", size = 1.5) +
+  geom_line(color = "#7dcfb6", size = 1) +
+  geom_point(color = "#f5641b", size = 1.5) +
   labs(
     title = "Scree Plot for Identifying Optimal Clusters",
     x = "Number of Clusters",
@@ -111,7 +111,7 @@ nc <- NbClust(df, min.nc=2, max.nc=15, method="kmeans", index="all")
 best_n_table <- as.data.frame(table(nc$Best.n[1,]))
 colnames(best_n_table) <- c("Clusters", "CriteriaCount")
 ggplot(best_n_table, aes(x = Clusters, y = CriteriaCount)) +
-  geom_bar(stat = "identity", fill = "#283d3b", color = NA) +
+  geom_bar(stat = "identity", fill = "#f9ca0a", color = NA) +
   labs(
     x = "Number of Clusters",
     y = "Number of Criteria",
@@ -153,14 +153,15 @@ cluster_summary %>%
       col.name=c('Cluster','MEDHVAL', "PCTBACHMOR", "MEDHHINC", "PCTVACANT", "PCTSINGLES", "Size")) %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
 ```
-```{r, message=FALSE, warning=FALSE}
+
+```{r, message=FALSE, warning=FALSE,fig.width=10, fig.height=8}
 cluster_assignments <- data.frame(Observation = 1:nrow(df), ClusterID = fit.km$cluster)
 philly_shape_with_clusters <- philly_shape %>%
   left_join(cluster_assignments, by = c("POLY_ID" = "Observation"))
 
 ggplot(philly_shape_with_clusters) +
   geom_sf(aes(fill = as.factor(ClusterID)), color = NA) +  # Set color to NA to remove stroke
-  scale_fill_manual(values = c("#edddd4", "#c44536")) +
+  scale_fill_manual(values = c("#7dcfb6", "#f5641b")) +
   theme(
     axis.text.x = element_blank(),
     axis.ticks.x = element_blank(),
