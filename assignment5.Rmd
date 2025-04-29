@@ -74,6 +74,10 @@ The choice of clustering algorithm depends on the characteristics of the data an
 
 # Results
 
+## `NbClust` Results
+
+To decide the optimal number of clusters for K-means clustering, we first made a scree plot of the within-cluster sum of squares (WSS) for different number of clusters. The scree plot helps identify the "elbow" point, which indicates the optimal number of clusters. We notice that there is a significant inflection point at 2 clusters, suggesting that 2 is a optimql choice for the number of clusters.
+
 ```{r, message=FALSE, warning=FALSE}
 
 df <- data.frame(scale(data[-1]))
@@ -102,10 +106,20 @@ ggplot(plot_data, aes(x = Clusters, y = WSS)) +
         axis.title=element_text(size=8))
 ```
 
+The **NbClust** package provides a comprehensive set of 30 indices to determine the optimal number of clusters. These indices include the **Silhouette** method, **Gap Statistic**, and **Dunn index**, among others. We use the 26 most popular indices to determine the optimal number of clusters.
+
+The NbClust function aggregated results from multiple clustering indices. Among those, we see that **8 indices** recommended 2 clusters while fewer indices recommend alternative numbers of clusters. Based on majority rule, this suggests that 2 clusters is a robust choice for the number of clusters in this dataset.
+
+In addition, the D index, which measure the second differences within-cluster variances for different clusters and help identify the elbow where adding more clusters could not significantly improve the fit. In this case, the D index also suggests that 2 clusters is a good choice.
+
+Therefore, based on the majority recommendation in NbClust, we choose 2 clusters as optimal number of clusters for K-means clustering.
+
 ```{r, message=FALSE, warning=FALSE}
 set.seed(1234)
 nc <- NbClust(df, min.nc=2, max.nc=15, method="kmeans", index="all")
 ```
+
+The plot below shows the number of clusters chosen by all 26 criteria mentioned above. The most popular choice is 2 clusters, which is recommended by 8 criteria. The second most popular choice is 15 clusters, which is recommended by 6 criteria. The third largest number of the criteria recommend either 3 or 4 clusters.
 
 ```{r, message=FALSE, warning=FALSE}
 best_n_table <- as.data.frame(table(nc$Best.n[1,]))
@@ -125,6 +139,8 @@ ggplot(best_n_table, aes(x = Clusters, y = CriteriaCount)) +
         axis.title=element_text(size=8))
 ```
 
+We ran the K-means clustering algorithm with optimal number of clusters 2 and 25 random starts. The random starts help to avoid local minima and ensure that the algorithm converges to a global minimum. The final cluster assignments are based on the best solution found across all random starts. The table below shows the sizes of each cluster, which indicates the number of observations assigned to each cluster. The first cluster contains 274 observations, while the second cluster contains 1,446 observations. The outcome of two clusters are not balanced, with the second cluster containing significantly more observations than the first one. This imbalance may indicate that the second cluster is more prevalent in the dataset.
+
 ```{r k-means, message=FALSE, warning=FALSE}
 set.seed(12)
 fit.km <- kmeans(df, 2, nstart = 25)
@@ -142,6 +158,8 @@ cluster_sizes %>%
   ) %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
 ```
+
+## Cluster Solution Analysis
 ```{r summarize cluster table, message=FALSE, warning=FALSE}
 cluster_summary <- cbind(
   round(aggregate(data[-1], by = list(Cluster = fit.km$cluster), mean), 1),
