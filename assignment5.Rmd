@@ -41,7 +41,39 @@ Additionally, this approach would help urban planners and policy makers to make 
 
 # Methods
 
+## K-Means Clustering Steps
+
+The K-Means algorithm is a popular clustering method that partitions data into K distinct clusters based on feature similarity. In essence, the calculation is a 6-step iterative process that involves the following steps:
+
+- **Initialization**: the desired number of clusters (K) is chosen, and K initial centroids are randomly initialized from the dataset.
+- **Assignment**: each data point is assigned to the nearest centroid, typically using the Euclidean distance metric.
+- **Update**: the centroids are recalculated as the mean of all data points assigned to each cluster.
+
+These **assignment** and **update** steps are alternate until the centroids stabilized, meaning that they no longer change significantly or the maximum number of iterations is reached. The final result is a set of k clusters, each represented by its centroid, and a set of data points assigned to each cluster. Ultimately, the K-means algorithm aims to minimize the **within-cluster sum of square errors *SSE**, which is the sum of squared distance between each observation and the centroid of the cluster into which it fails.
+
+### K-Means Clustering Limitations
+
+While K-means is effective and easy to implement, it comes with notable limitations:
+
+- **Specifying K**: The number of clusters (K) must be specified in advance, which can be challenging without prior knowledge of the data. In addition, the number of clusters may not be intuitive or clear for some datasets.
+- **Continuous Variables**: K-means clustering only applicable to continuous variables and may not work well with categorical or binary data.
+- **Spherical and Equal Size Clusters**: K-means assumes that clusters are spherical and of equal size, which may not align with the actual distribution of data.
+- **Scale Sensitivity**: K-means is sensitive to the scale of the data. Features with larger ranges can dominate distance calculations unless the data is standardized or normalized.
+- **Sensitivity of Outliers**: K-means is sensitive to outliers as they can disproportionately affect the centroids and, consequently, the cluster assignments.
+
+## Other Clustering Methods
+
+In addition to K-means, there are several other clustering methods that can be used to identify patterns in data. Among those, most popular ones are **Hierarchical Clustering** and  **DBSCAN**:
+
+- **Hierarchical Clustering**: This method builds a tree-like structure of clusters by either iteratively merging smaller clusters into larger ones (agglomerative) or splitting larger clusters into smaller ones (divisive). It does not require specifying the number of clusters (K) in advance and can provide a dendrogram to visualize the clustering process and identify non-spherical clusters. However, it can be computationally expensive for large datasets.
+- **DBSCAN (Density-Based Spatial Clustering of Applications with Noise)**: This method groups together points based on density, marking sparse areas as noise. This approach is robust to outliers and non-spherical clusters. However, it requires tuning parameters like the  \( \epsilon \) (the neighborhood radius) and minimum points for a clusters, which can be challenging with datasets of varying densities.
+
+## Comparison
+
+The choice of clustering algorithm depends on the characteristics of the data and research goals. For datasets with irregular cluster shapes or significant outliers, DBSCAN is a strong choice. If the researcher seeks a hierarchical representation or does know the number of cluster beforehand, hierarchical clustering is more suitable. In this case, spatial data like Philadelphia's block groups, where cluster boundaries might not be spherical, DBSCAN or hierarchical clustering could be more appropriate. However, K-means is still a valuable tool for its simplicity and interpretability, especially when the number of clusters is known and the data is well-scaled.
+
 # Results
+
 ```{r, message=FALSE, warning=FALSE}
 
 df <- data.frame(scale(data[-1]))
