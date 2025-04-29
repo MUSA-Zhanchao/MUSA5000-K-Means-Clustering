@@ -37,7 +37,7 @@ In this report, we use the K-means clustering algorithm to analyze five socio-ec
 
 K-means clustering offers several benefits: it reduces the complexity by segementing neighborhoods into clear typologies, highlights correlations between income, education, and housing types, and organizes the data into meaningful clusters. This analysis addresses key questions, such as identifying distinct neighborhood groups, understanding defining factors for each cluster, and exploring how income and education relate to vacancy rates of housing types.
 
-Additionally, this approach would help urban planners and policy makers to make target interventions for disadvantage clusters or neighborhoods, such as affordable housing or economic revitalization efforts. K-means clustering provides actionable insights for data-driven decision-making. 
+Additionally, this approach would help urban planners and policy makers to make target interventions for disadvantage clusters or neighborhoods, such as affordable housing or economic revitalization efforts. K-means clustering provides actionable insights for data-driven decision-making.
 
 # Methods
 
@@ -49,14 +49,14 @@ The K-Means algorithm is a popular clustering method that partitions data into K
 - **Assignment**: each data point is assigned to the nearest centroid, typically using the Euclidean distance metric.
 - **Update**: the centroids are recalculated as the mean of all data points assigned to each cluster.
 
-These **assignment** and **update** steps are alternate until the centroids stabilized, meaning that they no longer change significantly or the maximum number of iterations is reached. The final result is a set of k clusters, each represented by its centroid, and a set of data points assigned to each cluster. Ultimately, the K-means algorithm aims to minimize the **within-cluster sum of square errors *SSE**, which is the sum of squared distance between each observation and the centroid of the cluster into which it fails. 
+These **assignment** and **update** steps are alternate until the centroids stabilized, meaning that they no longer change significantly or the maximum number of iterations is reached. The final result is a set of k clusters, each represented by its centroid, and a set of data points assigned to each cluster. Ultimately, the K-means algorithm aims to minimize the **within-cluster sum of square errors *SSE**, which is the sum of squared distance between each observation and the centroid of the cluster into which it fails.
 
 ### K-Means Clustering Limitations
 
 While K-means is effective and easy to implement, it comes with notable limitations:
 
 - **Specifying K**: The number of clusters (K) must be specified in advance, which can be challenging without prior knowledge of the data. In addition, the number of clusters may not be intuitive or clear for some datasets.
-- **Continuous Variables**: K-means clustering only applicable to continuous variables and may not work well with categorical or binary data. 
+- **Continuous Variables**: K-means clustering only applicable to continuous variables and may not work well with categorical or binary data.
 - **Spherical and Equal Size Clusters**: K-means assumes that clusters are spherical and of equal size, which may not align with the actual distribution of data.
 - **Scale Sensitivity**: K-means is sensitive to the scale of the data. Features with larger ranges can dominate distance calculations unless the data is standardized or normalized.
 - **Sensitivity of Outliers**: K-means is sensitive to outliers as they can disproportionately affect the centroids and, consequently, the cluster assignments.
