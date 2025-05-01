@@ -160,6 +160,9 @@ cluster_sizes %>%
 ```
 
 ## Cluster Solution Analysis
+
+The table below summarizes our K-means cluster results in  the five variables. Based on the result, all points were divided into two clusters based on their spacial distribution, with 274 and 1446 observations in Clusters 1 and 2 respectively.
+
 ```{r summarize cluster table, message=FALSE, warning=FALSE}
 cluster_summary <- cbind(
   round(aggregate(data[-1], by = list(Cluster = fit.km$cluster), mean), 1),
@@ -171,6 +174,12 @@ cluster_summary %>%
       col.name=c('Cluster','MEDHVAL', "PCTBACHMOR", "MEDHHINC", "PCTVACANT", "PCTSINGLES", "Size")) %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
 ```
+
+As shown in the table, Cluster 1 represents neighborhoods with relatively high socioeconomic status, with a suitable label might as  **Gentrified Neighborhoods**. With a median home value over $150,000 and 46.9% of residents holding at least a bachelor's degree, these areas are clearly more affluent. The median household income is approximately $52,000. In addition, the low vacancy rate (4.8%) and a relatively high percentage of single-person households (22.3%) suggest an urbanized, in-demand housing environment that may attract younger, more educated professionals. Cluster 1 contains 274 observations, a smaller group that aligns with the idea that high-income urban tracts tend to be fewer but denser.
+
+In contrast, Cluster 2 appears to reflect communities of lower socioeconomic status. This group could be labeled **Disadvantaged Neighborhoods**. It has a significantly lower median household income of $27,668, and only 10.2% of residents hold a bachelor's degree or higher. The housing vacancy rate is substantially higher (12.5%), more than twice that of Cluster 1, which may indicate housing instability or disinvestment. Additionally, only 6.8% of residents live alone, pointing to more traditional or family-oriented household structures. With 1,446 observations, this cluster is much larger, suggesting that such communities are more prevalent and geographically widespread.
+
+From the distribution map below, we can also observe that neighborhoods in Cluster 1 tend to concentrate in Center City , North and Northwest Philadelphia—areas commonly associated with economic development and gentrification. This spatial pattern further reinforces the validity of the cluster interpretation, as it aligns with known trends in urban socio-spatial inequality.
 
 ```{r, message=FALSE, warning=FALSE,fig.width=10, fig.height=8}
 cluster_assignments <- data.frame(Observation = 1:nrow(df), ClusterID = fit.km$cluster)
