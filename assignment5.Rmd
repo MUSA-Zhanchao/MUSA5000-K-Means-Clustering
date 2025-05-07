@@ -12,6 +12,11 @@ output:
     code_download: yes
     mathjax: default
 ---
+*Keywords: K-means clustering, scree plot, unsupervised learning*
+
+GitHub Repository: [MUSA5000-K-Means-Clustering](https://github.com/zyang91/MUSA5000-K-Means-Clustering) \|
+[Website](https://zyang91.github.io/MUSA5000-K-Means-Clustering/)
+
 ```{r, message=FALSE, warning=FALSE, include=FALSE}
 
 options(scipen=999)
