@@ -209,3 +209,17 @@ ggplot(philly_shape_with_clusters) +
 ```
 
 # Discussion
+
+Building on the clustering and spatial analysis presented above, this section reflects on observed patterns and notable outcomes. 
+
+The K-means clustering analysis grouped Philadelphia’s block groups into five clusters based on median house value, median household income, percent of residents with a bachelor’s degree or more, percent of single-detached housing units, and percent of vacant housing units. The summary statistics for each cluster revealed distinct patterns in how these indicators vary across neighborhoods.
+
+Clusters with higher median incomes generally also had higher housing values and higher levels of educational attainment. Conversely, clusters with lower median incomes tended to have lower educational attainment and higher vacancy rates. These differences suggest that income, education, and vacancy levels are correlated in the data and that K-means was effective in separating areas based on these relationships.
+
+The map of cluster assignments showed that some clusters occupy larger contiguous areas of the city while others appear in smaller or more fragmented patterns. This suggests that certain neighborhood types are geographically concentrated. However, without neighborhood labels or more detailed geographic analysis, further interpretation of the spatial distribution remains limited.
+
+One somewhat surprising finding was the wide variation in vacancy rates across clusters. One cluster had an average vacancy rate above 20 percent while another was below 10 percent. This highlights vacancy as a strong differentiating factor across neighborhoods, more than might have been expected. Another notable result was the presence of a cluster with moderate values across all five indicators. Unlike the other groups, which tended to reflect either higher or lower socioeconomic status across variables, this cluster showed a more balanced profile. Its presence suggests the existence of neighborhoods that do not fit neatly into a high or low category and may be in a stable or transitional phase.
+
+Overall, this exercise revealed meaningful distinctions in neighborhood characteristics across Philadelphia. The patterns in the cluster summaries were clear, and the spatial visualization provided additional context that enhanced interpretation. While the results largely aligned with expectations about how socioeconomic indicators interact, the emergence of transitional or mixed-profile clusters offered new insight. This analysis demonstrates how unsupervised learning methods like K-means can help uncover underlying structure in urban data and support more nuanced understanding of neighborhood dynamics.
+
+---
