@@ -1,1 +1,1 @@
-# MUSA5000-K-Means-Clustering
+# MUSA5000 Assignment5: K Means Clustering
