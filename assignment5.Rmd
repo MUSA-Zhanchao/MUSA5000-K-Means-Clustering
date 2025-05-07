@@ -215,7 +215,7 @@ ggplot(philly_shape_with_clusters) +
 
 # Discussion
 
-Building on the clustering and spatial analysis presented above, this section reflects on observed patterns and notable outcomes. 
+Building on the clustering and spatial analysis presented above, this section reflects on observed patterns and notable outcomes.
 
 The K-means clustering analysis grouped Philadelphia’s block groups into five clusters based on median house value, median household income, percent of residents with a bachelor’s degree or more, percent of single-detached housing units, and percent of vacant housing units. The summary statistics for each cluster revealed distinct patterns in how these indicators vary across neighborhoods.
 
